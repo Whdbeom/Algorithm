@@ -2,26 +2,17 @@ import java.util.Arrays;
 
 class Solution {
     public int solution(String[] spell, String[] dic) {
-           int answer = 2;
+        int answer = 2;
         Arrays.sort(spell);
-        String spellStr = "";
-        for(int i = 0; i < spell.length; i++) {
-            spellStr += spell[i];
-        }
+        String spellStr = String.join("", spell); 
 
+        Arrays.sort(dic);
 
-        for(int i = 0; i < dic.length; i++){
-            String[] temp = new String[dic[i].length()];
-            temp = dic[i].split("");
-            Arrays.sort(temp);
-            String x = "";
-
-            for(int j = 0; j < temp.length; j++){
-                x += temp[j];
-            }
-
-            if(spellStr.equals(x)){
+        for (String word : dic) {
+            String sortedWord = String.join("", Arrays.stream(word.split("")).sorted().toArray(String[]::new)); 
+            if (spellStr.equals(sortedWord)) { 
                 answer = 1;
+                break; 
             }
         }
 
