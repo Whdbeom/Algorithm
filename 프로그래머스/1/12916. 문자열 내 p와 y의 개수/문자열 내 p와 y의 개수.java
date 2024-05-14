@@ -1,7 +1,5 @@
 class Solution {
     boolean solution(String s) {
-        boolean answer = false;
-
         s = s.toLowerCase();
         int p = 0;
         int y = 0;
@@ -13,9 +11,7 @@ class Solution {
                 ++y;
             }
         }
-        if(p == y){
-            answer = true;
-        }
-        return answer;
+
+        return p == y;
     }
 }
