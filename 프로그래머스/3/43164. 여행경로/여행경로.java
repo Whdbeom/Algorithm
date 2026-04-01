@@ -1,38 +1,73 @@
+
 import java.util.*;
 
 class Solution {
-	private Map<String, PriorityQueue<String>> graph = new HashMap<>();
-	private List<String> route = new ArrayList<>();
+    List<Stack<String>> result;
+    String[][] tickets;
 
-	public String[] solution(String[][] tickets) {
-		// 그래프 구성
-		for (String[] ticket : tickets) {
-			String from = ticket[0];
-			String to = ticket[1];
+    public String[] solution(String[][] tickets) {
+        result = new ArrayList<>();
+        this.tickets = tickets;
 
-			graph.putIfAbsent(from, new PriorityQueue<>());
-			graph.get(from).offer(to);
-		}
+        boolean[] visited = new boolean[tickets.length];
+        Stack<String> st = new Stack<>();
+        st.push("ICN");
 
-		// ICN에서 시작
-		dfs("ICN");
+        dfs(visited, st, 0);
 
-		// 후위 순회로 들어가 있으므로 뒤집기
-		Collections.reverse(route);
+        if (result.size() > 1) {
+            Collections.sort(result, new Comparator<Stack<String>>() {
+                @Override
+                public int compare(Stack<String> o1, Stack<String> o2) {
+                    for (int i = 0; i < o1.size(); i++) {
+                        String s1 = o1.get(i);
+                        String s2 = o2.get(i);
 
-		return route.toArray(new String[0]);
-	}
+                        if (!s1.equals(s2)) {
+                            return s1.compareTo(s2);
+                        }
+                    }
 
-	private void dfs(String airport) {
-		PriorityQueue<String> nextAirports = graph.get(airport);
+                    return 0;
+                }
+            });
+        }
 
-		// 현재 공항에서 갈 수 있는 티켓을 모두 소진
-		while (nextAirports != null && !nextAirports.isEmpty()) {
-			String next = nextAirports.poll();
-			dfs(next);
-		}
+        Stack<String> res = result.remove(0);
+        String[] answer = new String[res.size()];
 
-		// 더 이상 갈 곳이 없을 때 경로에 추가
-		route.add(airport);
-	}
+        for (int i = 0; i < answer.length; i++) {
+            answer[i] = res.get(i);
+        }
+
+        return answer;
+    }
+
+    public void dfs(boolean[] visited, Stack<String> st, int len) {
+        if (len == tickets.length) {
+            Stack<String> res = new Stack<>();
+            for (String s : st) {
+                res.push(s);
+            }
+
+            result.add(res);
+            return;
+        }
+
+        String arrive = st.peek();
+
+        for (int i = 0; i < tickets.length; i++) {
+            String[] tic = tickets[i];
+
+            if (!visited[i] && arrive.equals(tic[0])) {
+                st.push(tic[1]);
+                visited[i] = true;
+
+                dfs(visited, st, len + 1);
+
+                visited[i] = false;
+                st.pop();
+            }
+        }
+    }
 }

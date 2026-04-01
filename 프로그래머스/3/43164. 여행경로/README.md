@@ -1,10 +1,10 @@
 # [level 3] 여행경로 - 43164 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/43164?language=java) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/43164?utm_source=chatgpt.com) 
 
 ### 성능 요약
 
-메모리: 83.9 MB, 시간: 0.60 ms
+메모리: 103 MB, 시간: 80.79 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2026년 04월 02일 00:11:14
+2026년 04월 02일 00:14:32
 
 ### 문제 설명
 
